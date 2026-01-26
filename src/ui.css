@@ -1,0 +1,229 @@
+:root {
+  --background: hsl(228 5% 10%);
+  --foreground: hsl(228 5% 90%);
+  
+  --card: hsl(228 10% 15%);
+  --card-foreground: hsl(228 31% 91%);
+  
+  --popover: hsl(228 5% 10%);
+  --popover-foreground: hsl(228 31% 91%);
+  
+  --primary: hsl(228 40% 98%);
+  --primary-foreground: hsl(228 47% 11%);
+  
+  --secondary: hsl(228 15% 10%);
+  --secondary-foreground: hsl(228 40% 90%);
+  
+  --muted: hsl(228 35% 20%);
+  --muted-foreground: hsl(228 20% 65%);
+  
+  --accent: hsl(228 100% 71%);
+  --accent-foreground: hsl(228 40% 90%);
+  
+  --destructive: hsl(0 65% 30%);
+  --destructive-foreground: hsl(0 40% 90%);
+  
+  --border: hsl(228 10% 40%);
+  --input: hsl(from var(--border) h s l);
+  --ring: hsl(from var(--accent) h s l);
+
+  --radius: 0.5rem;
+  --font-sans: system-ui, -apple-system, sans-serif;
+}
+
+body {
+  margin: 0;
+  background-color: hsl(from var(--background) h s l);
+  color: hsl(from var(--foreground) h s l);
+  font-family: var(--font-sans);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  border-color: hsl(from var(--border) h s l);
+}
+
+button {
+  cursor: pointer;
+  border: 1px solid transparent;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  border-radius: var(--radius);
+  font-weight: 500;
+  transition: colors 0.15s;
+  background-color: hsl(from var(--primary) h s l);
+  color: hsl(from var(--primary-foreground) h s l);
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+button.secondary {
+  background-color: hsl(from var(--secondary) h s l);
+  color: hsl(from var(--secondary-foreground) h s l);
+}
+
+button.destructive {
+  background-color: hsl(from var(--destructive) h s l);
+  color: hsl(from var(--destructive-foreground) h s l);
+}
+
+button.outline {
+  background-color: transparent;
+  border-color: hsl(from var(--input) h s l);
+  color: hsl(from var(--foreground) h s l);
+}
+
+button.outline:hover {
+  background-color: hsl(from var(--accent) h s l);
+  color: hsl(from var(--accent-foreground) h s l);
+}
+
+input {
+  display: flex;
+  height: 2.25rem;
+  width: 100%;
+  border-radius: var(--radius);
+  border: 1px solid hsl(from var(--input) h s l);
+  background-color: transparent;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.875rem;
+  color: hsl(from var(--foreground) h s l);
+}
+
+input:focus {
+  outline: 2px solid hsl(from var(--ring) h s l);
+  outline-offset: 2px;
+}
+
+select option {
+  background-color: hsl(from var(--background) h s l);
+  color: hsl(from var(--foreground) h s l);
+}
+
+/* Layout Classes */
+.layout {
+  display: grid;
+  grid-template-areas: 
+    "header header"
+    "sidebar content"
+    "footer footer";
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 25svw 1fr;
+  height: 100%;
+  width: 100%;
+}
+
+.header {
+  grid-area: header;
+  border-bottom: 1px solid hsl(from var(--border) h s l);
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: hsl(from var(--card) h s l);
+}
+
+.sidebar {
+  grid-area: sidebar;
+  border-right: 1px solid hsl(from var(--border) h s l);
+  padding: 1rem;
+  background-color: hsl(from var(--card) h s l);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow-y: auto;
+}
+
+.content {
+  grid-area: content;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  overflow: hidden;
+  gap: 1rem;
+  background-color: hsl(from var(--background) h s l);
+}
+
+.footer {
+  grid-area: footer;
+  border-top: 1px solid hsl(from var(--border) h s l);
+  padding: 1rem;
+  background-color: hsl(from var(--card) h s l);
+  min-height: 150px;
+  overflow-y: auto;
+}
+
+/* Specific Component Styles */
+.console {
+  flex: 1;
+  background-color: black;
+  border: 1px solid hsl(from var(--border) h s l);
+  border-radius: var(--radius);
+  padding: 1rem;
+  font-family: monospace;
+  overflow-y: auto;
+  font-size: 0.9rem;
+  color: #efefef;
+  display: flex;
+  flex-direction: column;
+}
+
+.console-output {
+  flex: 1;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  margin-bottom: 1rem;
+}
+
+.console-input {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.player-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.player-card {
+  border: 1px solid hsl(from var(--border) h s l);
+  border-radius: var(--radius);
+  padding: 0.75rem;
+  background-color: hsl(from var(--secondary) h s l);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.toolbar-group {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.label {
+  font-size: 0.875rem;
+  color: hsl(from var(--muted-foreground) h s l);
+}
+
+.section-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: hsl(from var(--muted-foreground) h s l);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.flex-col { display: flex; flex-direction: column; }
+.flex-row { display: flex; flex-direction: row; align-items: center;}
+.gap-2 { gap: 0.5rem; }
+.scroll-y { overflow-y: auto; }

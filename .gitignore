@@ -1,0 +1,17 @@
+node_modules/
+
+/build
+/dist
+.svelte-kit
+bun.lockb
+
+.env
+.env.*
+
+.vscode/*
+.DS_Store
+
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+*.txt
