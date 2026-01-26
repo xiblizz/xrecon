@@ -1,4 +1,4 @@
-# XRecon
+# xReCON
 
 A modern Web UI for CS2 Server RCON management.
 
