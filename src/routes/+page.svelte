@@ -258,7 +258,7 @@
         </div>
         <button on:click={saveConfig}>Save</button>
         <div style="flex:1"></div>
-        <span style="font-weight:bold; color: hsl(var(--primary));">xReCON</span>
+        <span style="font-weight:bold; color: hsl(from var(--accent) h s l);">xReCON</span>
     </header>
 
     <!-- Left: Control Panel -->
@@ -331,7 +331,7 @@
         </div>
         <div
             class="flex-col gap-2"
-            style="overflow-y:auto; flex:1; max-height: auto;"
+            style="overflow-y: auto; flex:1; max-height: auto;"
         >
             {#each workshopMaps as map}
                 <div style="display:flex; gap:0.2rem;">
@@ -359,18 +359,29 @@
             class="flex-col gap-2"
             style="margin-top:0.5rem; padding-top: 0.5rem;"
         >
-            <input
-                type="text"
-                bind:value={newMapName}
-                placeholder="Map Name"
-                style="font-size:0.8rem;"
-            />
-            <input
-                type="text"
-                bind:value={newMapId}
-                placeholder="Map ID"
-                style="font-size:0.8rem;"
-            />
+            <div
+                class="label"
+                style="font-size:0.75rem;"
+            >
+                Add Workshop Map:
+            </div>
+            <div
+                class="flex-row gap-2"
+                style="font-size:0.8rem; align-items:center;"
+            >
+                <input
+                    type="text"
+                    bind:value={newMapName}
+                    placeholder="Map Name"
+                    style="font-size:0.8rem;"
+                />
+                <input
+                    type="text"
+                    bind:value={newMapId}
+                    placeholder="Map ID"
+                    style="font-size:0.8rem;"
+                />
+            </div>
             <button
                 on:click={addWorkshopMap}
                 style="font-size:0.8rem;">Add Workshop Map</button

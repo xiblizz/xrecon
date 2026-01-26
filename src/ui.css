@@ -1,6 +1,6 @@
 :root {
-  --background: hsl(228 5% 10%);
-  --foreground: hsl(228 5% 90%);
+  --background: hsl(228 10% 10%);
+  --foreground: hsl(228 10% 90%);
   
   --card: hsl(228 10% 15%);
   --card-foreground: hsl(228 31% 91%);
@@ -21,7 +21,7 @@
   --accent-foreground: hsl(228 40% 90%);
   
   --destructive: hsl(0 65% 30%);
-  --destructive-foreground: hsl(0 40% 90%);
+  --destructive-foreground: hsl(0 30% 95%);
   
   --border: hsl(228 10% 40%);
   --input: hsl(from var(--border) h s l);
@@ -44,7 +44,7 @@ body {
 
 *, *::before, *::after {
   box-sizing: border-box;
-  border-color: hsl(from var(--border) h s l);
+  border-color: hsla(from var(--border) h s l / 0.2);
 }
 
 button {
@@ -61,7 +61,7 @@ button {
 }
 
 button:hover {
-  opacity: 0.9;
+  opacity: 0.8;
 }
 
 button.secondary {
@@ -81,7 +81,8 @@ button.outline {
 }
 
 button.outline:hover {
-  background-color: hsl(from var(--accent) h s l);
+  background-color: hsla(from var(--accent) h s l / 0.5);
+  border-color: hsla(from var(--accent) h s l / 0.8);
   color: hsl(from var(--accent-foreground) h s l);
 }
 
@@ -115,7 +116,7 @@ select option {
     "sidebar content"
     "footer footer";
   grid-template-rows: auto 1fr auto;
-  grid-template-columns: 25svw 1fr;
+  grid-template-columns: 400px 1fr;
   height: 100%;
   width: 100%;
 }
@@ -132,9 +133,9 @@ select option {
 
 .sidebar {
   grid-area: sidebar;
-  border-right: 1px solid hsl(from var(--border) h s l);
+  /* border-right: 1px solid hsl(from var(--border) h s l); */
   padding: 1rem;
-  background-color: hsl(from var(--card) h s l);
+  background-color: hsl(from var(--background) h s l);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
