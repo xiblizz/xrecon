@@ -27,8 +27,8 @@
   --input: hsl(from var(--border) h s l);
   --ring: hsl(from var(--accent) h s l);
 
-  --radius: 0.5rem;
-  --font-sans: system-ui, -apple-system, sans-serif;
+  --radius: .5rem;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
 }
 
 body {
@@ -43,6 +43,7 @@ body {
 }
 
 *, *::before, *::after {
+  font-family: var(--font-sans);
   box-sizing: border-box;
   border-color: hsla(from var(--border) h s l / 0.2);
 }
@@ -55,13 +56,13 @@ button {
   line-height: 1.25rem;
   border-radius: var(--radius);
   font-weight: 500;
-  transition: colors 0.15s;
+  transition: 0.2s ease;
   background-color: hsl(from var(--primary) h s l);
   color: hsl(from var(--primary-foreground) h s l);
 }
 
 button:hover {
-  opacity: 0.8;
+  filter: brightness(1.2) contrast(1.2);
 }
 
 button.secondary {
@@ -81,7 +82,7 @@ button.outline {
 }
 
 button.outline:hover {
-  background-color: hsla(from var(--accent) h s l / 0.5);
+  background-color: hsla(from var(--accent) h s l / 0.1);
   border-color: hsla(from var(--accent) h s l / 0.8);
   color: hsl(from var(--accent-foreground) h s l);
 }
@@ -168,7 +169,7 @@ select option {
   border: 1px solid hsl(from var(--border) h s l);
   border-radius: var(--radius);
   padding: 1rem;
-  font-family: monospace;
+  font-family: monospace !important;
   overflow-y: auto;
   font-size: 0.9rem;
   color: #efefef;
