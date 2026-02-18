@@ -11,6 +11,12 @@
     let commandInput = ''
     let isProcessing = false
 
+    // Command history for console (navigate with ArrowUp / ArrowDown)
+    let commandHistory = [] // Array of previous command strings
+    let historyIndex = 0 // index into commandHistory; commandHistory.length means current editing buffer
+    let historyTemp = '' // temporary store for current input when navigating history
+    let consoleInputEl = null
+
     let players = []
 
     // Maps
@@ -143,6 +149,19 @@
         if (savedMaps) {
             workshopMaps = JSON.parse(savedMaps)
         }
+        // Load saved command history (last 50)
+        const savedHistory = localStorage.getItem('xrecon_command_history')
+        if (savedHistory) {
+            try {
+                const parsed = JSON.parse(savedHistory)
+                if (Array.isArray(parsed)) {
+                    commandHistory = parsed.slice(-50)
+                    historyIndex = commandHistory.length
+                }
+            } catch (e) {
+                // ignore parse errors
+            }
+        }
     })
 
     /* Actions */
@@ -244,14 +263,77 @@
         }
     }
 
-    function handleConsoleSubmit() {
+    async function handleConsoleSubmit() {
         if (!commandInput.trim()) return
-        sendCommand(commandInput)
+
+        // Save to history
+        commandHistory = [...commandHistory, commandInput]
+        // Trim to last 50 entries and persist
+        if (commandHistory.length > 50) {
+            commandHistory = commandHistory.slice(commandHistory.length - 50)
+        }
+        try {
+            localStorage.setItem('xrecon_command_history', JSON.stringify(commandHistory))
+        } catch (e) {
+            // ignore storage errors
+        }
+
+        // Reset history index to 'editing' position
+        historyIndex = commandHistory.length
+        historyTemp = ''
+
+        // Send and wait so we can reliably refocus after send
+        await sendCommand(commandInput)
+
+        // Clear input and keep focus on the console input
         commandInput = ''
+        consoleInputEl?.focus()
     }
 
     function handleKeydown(e) {
-        if (e.key === 'Enter') handleConsoleSubmit()
+        // Enter: submit
+        if (e.key === 'Enter') {
+            handleConsoleSubmit()
+            return
+        }
+
+        // Arrow Up: go back in history
+        if (e.key === 'ArrowUp') {
+            if (commandHistory.length === 0) return
+            e.preventDefault()
+
+            // On first up from editing buffer, save current input
+            if (historyIndex === commandHistory.length) {
+                historyTemp = commandInput
+            }
+
+            if (historyIndex > 0) {
+                historyIndex = historyIndex - 1
+            } else {
+                historyIndex = 0
+            }
+
+            commandInput = commandHistory[historyIndex] || ''
+            return
+        }
+
+        // Arrow Down: go forward in history or back to editing buffer
+        if (e.key === 'ArrowDown') {
+            if (commandHistory.length === 0) return
+            e.preventDefault()
+
+            if (historyIndex < commandHistory.length - 1) {
+                historyIndex = historyIndex + 1
+                commandInput = commandHistory[historyIndex] || ''
+            } else {
+                // Move to editing buffer (beyond last)
+                historyIndex = commandHistory.length
+                commandInput = historyTemp || ''
+                historyTemp = ''
+            }
+
+            return
+        }
     }
 
     /* Map Management */
@@ -468,6 +550,7 @@
                     on:keydown={handleKeydown}
                     placeholder="Enter command..."
                     disabled={isProcessing}
+                    bind:this={consoleInputEl}
                 />
                 <button
                     on:click={handleConsoleSubmit}
