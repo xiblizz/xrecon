@@ -69,6 +69,50 @@
             ],
         },
         {
+            name: 'Modes',
+            commands: [
+                {
+                    type: 'select',
+                    label: 'Game Mode',
+                    cmd: 'game_alias',
+                    options: [
+                        { label: 'Competitive', value: 'competitive' },
+                        { label: 'Wingman', value: 'wingman' },
+                        { label: 'Deathmatch', value: 'deathmatch' },
+                        { label: 'Casual', value: 'casual' },
+                        { label: 'Arms Race', value: 'armsrace' },
+                        { label: 'Custom', value: 'custom' },
+                    ],
+                    selected: 'competitive',
+                },
+                {
+                    type: 'select',
+                    label: 'Freeze Time',
+                    cmd: 'mp_freezetime',
+                    options: [
+                        { label: '1s', value: '1' },
+                        { label: '3s', value: '3' },
+                        { label: '5s', value: '5' },
+                        { label: '10s', value: '10' },
+                        { label: '15s', value: '15' },
+                    ],
+                    selected: '15',
+                },
+                {
+                    type: 'select',
+                    label: 'Restart Delay',
+                    cmd: 'mp_round_restart_delay',
+                    options: [
+                        { label: '1s', value: '1' },
+                        { label: '3s', value: '3' },
+                        { label: '5s', value: '5' },
+                        { label: '7s', value: '7' },
+                    ],
+                    selected: '7',
+                },
+            ],
+        },
+        {
             name: 'Bots',
             commands: [
                 { type: 'action', label: 'Kick Bots', cmd: 'bot_kick' },
@@ -506,6 +550,30 @@
                                     </button>
                                 </div>
                             </div>
+                        {:else if cmd.type === 'select'}
+                            <div
+                                class="flex-row"
+                                style="justify-content: space-between; align-items: center;"
+                            >
+                                <span style="padding: 0.5rem; font-size: 0.875rem;">{cmd.label}</span>
+                                <div
+                                    style="height: 1px; flex: 1; border-bottom: 1px solid hsl(from var(--border) h s l);"
+                                ></div>
+                                <div
+                                    class="flex-row gap-2"
+                                    style="padding-left: 0.5rem;"
+                                >
+                                    <select
+                                        class="button"
+                                        bind:value={cmd.selected}
+                                        on:change={() => sendCommand(`${cmd.cmd} ${cmd.selected}`)}
+                                    >
+                                        {#each cmd.options as option}
+                                            <option value={option.value}>{option.label}</option>
+                                        {/each}
+                                    </select>
+                                </div>
+                            </div>
                         {:else}
                             <button
                                 class="outline"
@@ -587,7 +655,7 @@
                 </select>
                 <button
                     class="outline"
-                    on:click={() => changeMap(selectedStandardMap)}>Go</button
+                    on:click={() => changeMap(selectedStandardMap)}>Switch</button
                 >
             </div>
         </div>
@@ -674,7 +742,7 @@
         <div class="section-title flex-row gap-2">
             Players ({players.length})<button
                 class="outline"
-                on:click={refreshPlayers}>Refresh</button
+                on:click={refreshPlayers}>↺</button
             >
         </div>
         <div class="player-list">

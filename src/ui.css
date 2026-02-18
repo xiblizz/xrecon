@@ -117,7 +117,8 @@ a.button.outline:hover {
     color: hsl(from var(--accent-foreground) h s l);
 }
 
-input {
+input,
+select {
     display: flex;
     height: 2.25rem;
     width: 100%;
