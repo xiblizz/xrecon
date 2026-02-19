@@ -665,7 +665,7 @@
             class="label"
             style="font-size:0.75rem;"
         >
-            Workshop Maps
+            <a href='https://steamcommunity.com/workshop/browse?appid=730&browsesort=trend&section=readytouseitems'>Workshop</a> Maps
         </div>
         <div
             class="flex-col gap-2"
