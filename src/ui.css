@@ -70,6 +70,11 @@ body {
     border-color: hsla(from var(--border) h s l / 0.2);
 }
 
+a, a:visited {
+    color: hsl(from var(--accent) h s l);
+    text-decoration: none;
+}
+
 button,
 a.button {
     text-decoration: none;
